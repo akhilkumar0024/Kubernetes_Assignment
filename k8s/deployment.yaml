@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       - name: react-app-container
-        image: akhilkumar119/react-app:v2
+        image: akhilkumar119/react-app:v3
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
 
