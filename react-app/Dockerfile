@@ -1,7 +1,14 @@
-FROM node:20-alpine
+#build stage
+FROM node:20-alpine as build
 WORKDIR /app
+#copy package.json and package-lock.json
 COPY package*.json ./
 RUN npm install
+#copy the rest of the application
 COPY . ./
-EXPOSE 3000
-CMD ["npm", "run", "dev"]
+RUN npm run build
+
+#transfer the build output to the nginx folder /usr/share/nginx/html 
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
